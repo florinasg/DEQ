@@ -68,12 +68,12 @@ int diffusion_BOUNDED_EULER_EXPLICIT(double a, double b)
 				DENS.at(i).conc_hist.back().push_back(t);
 				/*writes updated value of density in element*/
 				DENS.at(i).conc_hist.back().push_back(double());
-				DENS.at(i).conc_hist.back()[2] =
+				DENS.at(i).conc_hist.back()[1] =
 
 						/*EULER EXPLICIT*/
 						DENS.at(i).conc_hist.at(t-1)[2] +
-						double(DIFFUSION_CONST)* (1/pow(interval,2)) * (DENS.at(i+1).conc_hist.at(t-1)[2]
-																									   - 2*DENS.at(i).conc_hist.at(t-1)[2]);
+						double(DIFFUSION_CONST)* (1/pow(interval,2)) * (DENS.at(i+1).conc_hist.at(t-1)[1]
+																									   - 2*DENS.at(i).conc_hist.at(t-1)[1]);
 
 
 
@@ -90,8 +90,8 @@ int diffusion_BOUNDED_EULER_EXPLICIT(double a, double b)
 				DENS.at(i).conc_hist.back()[2] =
 
 						/*EULER EXPLICIT*/
-						DENS.at(i).conc_hist.at(t-1)[2] +
-						double(DIFFUSION_CONST)* (1/pow(interval,2)) * (- 2*DENS.at(i).conc_hist.at(t-1)[2] + DENS.at(i-1).conc_hist.at(t-1)[2]);
+						DENS.at(i).conc_hist.at(t-1)[1] +
+						double(DIFFUSION_CONST)* (1/pow(interval,2)) * (- 2*DENS.at(i).conc_hist.at(t-1)[1] + DENS.at(i-1).conc_hist.at(t-1)[1]);
 
 			}
 
@@ -104,13 +104,13 @@ int diffusion_BOUNDED_EULER_EXPLICIT(double a, double b)
 				DENS.at(i).conc_hist.back().push_back(t);
 				/*writes updated value of density in element*/
 				DENS.at(i).conc_hist.back().push_back(double());
-				DENS.at(i).conc_hist.back()[2] =
+				DENS.at(i).conc_hist.back()[1] =
 
 						/*EULER EXPLICIT*/
-						DENS.at(i).conc_hist.at(t-1)[2] +
-						double(DIFFUSION_CONST)* (1/pow(interval,2)) * (DENS.at(i+1).conc_hist.at(t-1)[2]
-																									   - 2*DENS.at(i).conc_hist.at(t-1)[2]
-																																		+ DENS.at(i-1).conc_hist.at(t-1)[2]);
+						DENS.at(i).conc_hist.at(t-1)[1] +
+						double(DIFFUSION_CONST)* (1/pow(interval,2)) * (DENS.at(i+1).conc_hist.at(t-1)[1]
+																									   - 2*DENS.at(i).conc_hist.at(t-1)[1]
+																																		+ DENS.at(i-1).conc_hist.at(t-1)[1]);
 
 			}
 
@@ -126,7 +126,7 @@ int diffusion_BOUNDED_EULER_EXPLICIT(double a, double b)
 	{
 		for(int t  = 0; t< double(OBS_TIME); t++)
 		{
-			file << DENS.at(i).conc_hist.at(t)[2] << "\n";
+			file << DENS.at(i).conc_hist.at(t)[1] << "\n";
 		}
 
 		file << ",";
