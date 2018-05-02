@@ -1,4 +1,14 @@
 /*
+ * diffusion_REFLECTIVE_EULER_EXPLICIT.cpp
+ *
+ *  Created on: 02.05.2018
+ *      Author: Flo
+ */
+
+
+
+
+/*
  * diffusion_BOUNDEN_EULER_EXPLICIT.cpp
  *
  *  Created on: 01.05.2018
@@ -7,8 +17,8 @@
 
 #include <vector>
 #include <math.h>
-#include "header.h"
-#include "Defines.h"
+#include "../header.h"
+#include "../Defines.h"
 
 
 
@@ -19,6 +29,9 @@
 
 int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
 {
+
+	std::cout << "EULER_EXPLICIT SCHEME WITH ABSORBING BOUNDRARIER... " << std::endl;
+
 	double grid_const = double(GRID_CONST);
 
 	/*determined grid interval*/

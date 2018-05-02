@@ -1,8 +1,8 @@
 /*NB! GRID_CONST MUST BE EVEN*/
-#define GRID_CONST 400
+#define GRID_CONST 60
 #define xZERO 0.5*GRID_CONST
 #define ALPHA 0.00001
 #define SPILL_MASS 10
 #define DIFFUSION_CONST 1
 #define OBS_TIME 1
-#define DELTA_T 0.00000001
+#define DELTA_T 0.0001

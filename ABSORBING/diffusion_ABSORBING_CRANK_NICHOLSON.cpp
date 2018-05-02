@@ -1,32 +1,28 @@
 /*
- * diffusion_REFLECTIVE.cpp
+ * diffusion_BOUNDED_CRANK_NICHOLSON.cpp
  *
- *  Created on: 26.04.2018
+ *  Created on: 01.05.2018
  *      Author: Florian Anderl
  */
 
-
 #include <vector>
 #include <math.h>
-#include "header.h"
-#include "Defines.h"
+#include "../header.h"
+#include "../Defines.h"
 
 
 
-int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
+int diffusion_ABSORBING_CRANK_NICOLSON(double a, double b)
 {
-
-	std::cout << "diffusion_ABSORBING_EULER_IMPLICIT started ...\n";
-
 	double grid_const = double(GRID_CONST);
 
 	/*determined grid interval*/
 	double interval = 0.0;
 	interval = double(1/(grid_const-1));
-	std::cout << "Delta X: " << interval << std::endl;
+
 
 	std::ofstream file;
-	file.open("EULER_IMPLICIT_"+std::to_string(GRID_CONST)+".csv");
+	file.open("CRANK_NICOLSON_IMPLICIT_"+std::to_string(GRID_CONST)+".csv");
 
 
 	/*initializes grid*/
@@ -40,11 +36,11 @@ int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
 
 	DENS = dirac_delta(DENS, double(xZERO), double(SPILL_MASS), double(ALPHA));
 
-
 	int T = 0;
 	for(double t = 1*DELTA_T; t<= double(OBS_TIME); t = t+double(DELTA_T))
 	{
-		DENS = TRI_DIAGONAL_SOLVER(DENS,1,T);
+		/*CALL IN MODE '2'*/
+		DENS = TRI_DIAGONAL_SOLVER(DENS,2,T);
 
 		for(int i = 0; i < GRID_CONST; i++)
 		{
@@ -58,7 +54,6 @@ int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
 	file.close();
 
 
+
 	return 0;
 }
-
-

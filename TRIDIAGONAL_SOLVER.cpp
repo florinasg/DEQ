@@ -76,7 +76,7 @@ std::vector<DIF>  TRI_DIAGONAL_SOLVER(std::vector<DIF> b, int mode, double time_
 
 
 
-		X = arma::solve(A, B);
+		X = arma::solve(A, B,arma::solve_opts::fast);
 
 
 
@@ -94,7 +94,7 @@ std::vector<DIF>  TRI_DIAGONAL_SOLVER(std::vector<DIF> b, int mode, double time_
 	{
 
 		arma::mat A(GRID_CONST, GRID_CONST);
-		arma::mat B1(GRID_CONST);
+		arma::mat B1(GRID_CONST,GRID_CONST);
 		arma::vec B2(GRID_CONST);
 
 		arma::mat B(GRID_CONST,GRID_CONST);
@@ -170,7 +170,7 @@ std::vector<DIF>  TRI_DIAGONAL_SOLVER(std::vector<DIF> b, int mode, double time_
 		B = B1 * B2;
 
 
-		X = arma::solve(A, B);
+		X = arma::solve(A, B, arma::solve_opts::fast);
 
 
 
