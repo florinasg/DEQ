@@ -21,6 +21,10 @@ int diffusion_ABSORBING_CRANK_NICOLSON(double a, double b)
 	interval = double(1/(grid_const-1));
 
 
+	std::ofstream file;
+	file.open("CRANK_NICOLSON_IMPLICIT_"+std::to_string(GRID_CONST)+".csv");
+
+
 	/*initializes grid*/
 	std::vector<DIF> DENS;
 	for(double i = a; i <=b ; i = i + interval )
@@ -28,6 +32,28 @@ int diffusion_ABSORBING_CRANK_NICOLSON(double a, double b)
 		DENS.push_back(DIF());
 		DENS.back().coord = i;
 	}
+
+
+	DENS = dirac_delta(DENS, double(xZERO), double(SPILL_MASS), double(ALPHA));
+
+	int T = 0;
+	for(double t = 1*DELTA_T; t<= double(OBS_TIME); t = t+double(DELTA_T))
+	{
+		/*CALL IN MODE '2'*/
+		DENS = TRI_DIAGONAL_SOLVER(DENS,2,T);
+
+		for(int i = 0; i < GRID_CONST; i++)
+		{
+			file << DENS.at(i).conc_hist.at(T)[1] << ",";
+			file.flush();
+		}
+		file << "\n";
+		T++;
+	}
+
+	file.close();
+
+
 
 	return 0;
 }

@@ -26,7 +26,7 @@ int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
 	std::cout << "Delta X: " << interval << std::endl;
 
 	std::ofstream file;
-	file.open("EULER_EXPLICIT_"+std::to_string(GRID_CONST)+".csv");
+	file.open("EULER_IMPLICIT_"+std::to_string(GRID_CONST)+".csv");
 
 
 	/*initializes grid*/

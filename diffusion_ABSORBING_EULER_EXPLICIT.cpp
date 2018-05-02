@@ -78,7 +78,7 @@ int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
 		DENS.at(GRID_CONST-1).conc_hist.back().push_back(double(DENS.at(GRID_CONST-1).conc_hist.at(0).at(1)));
 
 
-		/*Boundrary Condition implemented in boundaries of for-loop*/
+		/*Boundary Condition implemented in boundaries of for-loop*/
 		for(int i = 1; i < DENS.size()-1; i++)
 		{
 			if(i == 1)
