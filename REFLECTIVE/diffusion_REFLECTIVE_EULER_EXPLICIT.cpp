@@ -27,10 +27,10 @@
 
 /*EXPLICIT -> NO LINEAR SYSTEM*/
 
-int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
+int diffusion_REFLECTIVE_EULER_EXPLICIT(double a, double b)
 {
 
-	std::cout << "EULER_EXPLICIT SCHEME WITH ABSORBING BOUNDRARIER... " << std::endl;
+	std::cout << "EULER_EXPLICIT SCHEME WITH REFLECTIVE BOUNDARIES... " << std::endl;
 
 	double grid_const = double(GRID_CONST);
 
@@ -67,10 +67,10 @@ int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
 
 
 	std::ofstream file;
-	file.open("EULER_EXPLICIT_"+std::to_string(GRID_CONST)+".csv");
+	file.open("EULER_EXPLICIT_REFLECTIVE_"+std::to_string(GRID_CONST)+".csv");
 
 
-	for(int i = 1; i < DENS.size()-1; i++)
+	for(int i = 0; i < DENS.size(); i++)
 	{
 		file << DENS.at(i).conc_hist.at(0)[1] << ",";
 	}
@@ -80,21 +80,12 @@ int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
 	int T = 1;
 	for(double t = 1*DELTA_T; t<= double(OBS_TIME); t = t+double(DELTA_T))
 	{
-		/*Copies initial value at boundaries for every time step -> a*/
-		DENS.at(0).conc_hist.push_back(std::vector<double>());
-		DENS.at(0).conc_hist.back().push_back(T);
-		DENS.at(0).conc_hist.back().push_back(double(DENS.at(0).conc_hist.at(0).at(1)));
-
-		/*Copies initial value at boundaries for every time step -> b*/
-		DENS.at(GRID_CONST-1).conc_hist.push_back(std::vector<double>());
-		DENS.at(GRID_CONST-1).conc_hist.back().push_back(T);
-		DENS.at(GRID_CONST-1).conc_hist.back().push_back(double(DENS.at(GRID_CONST-1).conc_hist.at(0).at(1)));
 
 
 		/*Boundary Condition implemented in boundaries of for-loop*/
-		for(int i = 1; i < DENS.size()-1; i++)
+		for(int i = 0; i < DENS.size(); i++)
 		{
-			if(i == 1)
+			if(i == 0)
 			{
 				/*adds element in density history of DENS(i)*/
 				DENS.at(i).conc_hist.push_back(std::vector<double>());
@@ -107,12 +98,12 @@ int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
 
 						/*EULER EXPLICIT*/
 						DENS.at(i).conc_hist.at(T-1)[1] +
-						double(DIFFUSION_CONST)* (deltaT/nominator) * (DENS.at(i+1).conc_hist.at(T-1)[1]
-																									  - 2*DENS.at(i).conc_hist.at(T-1)[1]);
+						double(DIFFUSION_CONST)* 2*(deltaT/nominator) * (DENS.at(i+1).conc_hist.at(T-1)[1]
+																									  - DENS.at(i).conc_hist.at(T-1)[1]);
 
 			}
 
-			else if(i == DENS.size()-2)
+			else if(i == DENS.size()-1)
 			{
 
 				/*adds element in density history of DENS(i)*/
@@ -126,7 +117,7 @@ int diffusion_ABSORBING_EULER_EXPLICIT(double a, double b)
 
 						/*EULER EXPLICIT*/
 						DENS.at(i).conc_hist.at(T-1)[1] +
-						double(DIFFUSION_CONST)* (deltaT/nominator) * (- 2*DENS.at(i).conc_hist.at(T-1)[1] + DENS.at(i-1).conc_hist.at(T-1)[1]);
+						double(DIFFUSION_CONST)* 2*(deltaT/nominator) * (-DENS.at(i).conc_hist.at(T-1)[1] + DENS.at(i-1).conc_hist.at(T-1)[1]);
 
 			}
 

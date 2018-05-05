@@ -35,6 +35,7 @@ int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
 	{
 		DENS.push_back(DIF());
 		DENS.back().coord = i;
+		//print(i);
 	}
 
 
@@ -44,7 +45,19 @@ int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
 	int T = 0;
 	for(double t = 1*DELTA_T; t<= double(OBS_TIME); t = t+double(DELTA_T))
 	{
-		DENS = TRI_DIAGONAL_SOLVER(DENS,1,T);
+
+		/*Copies initial value at boundaries for every time step -> a*/
+		DENS.at(0).conc_hist.push_back(std::vector<double>());
+		DENS.at(0).conc_hist.back().push_back(T);
+		DENS.at(0).conc_hist.back().push_back(double(DENS.at(0).conc_hist.at(0).at(1)));
+
+		/*Copies initial value at boundaries for every time step -> b*/
+		DENS.at(GRID_CONST-1).conc_hist.push_back(std::vector<double>());
+		DENS.at(GRID_CONST-1).conc_hist.back().push_back(T);
+		DENS.at(GRID_CONST-1).conc_hist.back().push_back(double(DENS.at(GRID_CONST-1).conc_hist.at(0).at(1)));
+
+
+		DENS = TRI_DIAGONAL_SOLVER_ABSORBING(DENS,1,T);
 
 		for(int i = 0; i < GRID_CONST; i++)
 		{

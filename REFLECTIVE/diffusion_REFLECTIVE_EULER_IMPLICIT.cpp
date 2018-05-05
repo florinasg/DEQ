@@ -23,7 +23,7 @@
 
 
 
-int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
+int diffusion_REFLECTIVE_EULER_IMPLICIT(double a, double b)
 {
 
 	std::cout << "diffusion_ABSORBING_EULER_IMPLICIT started ...\n";
@@ -54,7 +54,7 @@ int diffusion_ABSORBING_EULER_IMPLICIT(double a, double b)
 	int T = 0;
 	for(double t = 1*DELTA_T; t<= double(OBS_TIME); t = t+double(DELTA_T))
 	{
-		DENS = TRI_DIAGONAL_SOLVER(DENS,1,T);
+		DENS = TRI_DIAGONAL_SOLVER_REFLECTIVE(DENS,1,T);
 
 		for(int i = 0; i < GRID_CONST; i++)
 		{

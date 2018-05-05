@@ -14,6 +14,9 @@
 
 int diffusion_ABSORBING_CRANK_NICOLSON(double a, double b)
 {
+
+	print("diffusion_ABSORBING_CRANK_NICOLSON started...");
+
 	double grid_const = double(GRID_CONST);
 
 	/*determined grid interval*/
@@ -39,8 +42,18 @@ int diffusion_ABSORBING_CRANK_NICOLSON(double a, double b)
 	int T = 0;
 	for(double t = 1*DELTA_T; t<= double(OBS_TIME); t = t+double(DELTA_T))
 	{
+
+		/*Copies initial value at boundaries for every time step -> a*/
+		DENS.at(0).conc_hist.push_back(std::vector<double>());
+		DENS.at(0).conc_hist.back().push_back(T);
+		DENS.at(0).conc_hist.back().push_back(double(DENS.at(0).conc_hist.at(0).at(1)));
+
+		/*Copies initial value at boundaries for every time step -> b*/
+		DENS.at(GRID_CONST-1).conc_hist.push_back(std::vector<double>());
+		DENS.at(GRID_CONST-1).conc_hist.back().push_back(T);
+		DENS.at(GRID_CONST-1).conc_hist.back().push_back(double(DENS.at(GRID_CONST-1).conc_hist.at(0).at(1)));
 		/*CALL IN MODE '2'*/
-		DENS = TRI_DIAGONAL_SOLVER(DENS,2,T);
+		DENS = TRI_DIAGONAL_SOLVER_ABSORBING(DENS,2,T);
 
 		for(int i = 0; i < GRID_CONST; i++)
 		{

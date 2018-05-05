@@ -11,13 +11,16 @@
 int main(int argc, char * argv[])
 {
 
-	/*args = [a,b, diffusion_constant, x0(center of dirac-sist) factor*grid_points(e.g. 0.5 * 1000), mass spilled]*/
-	diffusion_ABSORBING_EULER_EXPLICIT(0,1);
+	/*args = [a,b, diffusion_constant, x0(center of dirac-dist) factor*grid_points(e.g. 0.5 * 1000), mass spilled]*/
+	//diffusion_ABSORBING_EULER_EXPLICIT(0,1);
 
-	diffusion_ABSORBING_EULER_IMPLICIT(0,1);
-
+	//diffusion_ABSORBING_EULER_IMPLICIT(0,1);
 
 	diffusion_ABSORBING_CRANK_NICOLSON(0,1);
+
+	//diffusion_REFLECTIVE_EULER_EXPLICIT(0,1);
+
+
 
 
 	std::cout << "Tasks finished successfully..." <<std::endl;
